@@ -3,15 +3,11 @@
  */
 package com.github.ribesg.javachat.client;
 
-import static com.github.ribesg.javachat.common.Constants.SERVER_ADDRESS;
-import static com.github.ribesg.javachat.common.Constants.SERVER_PORT;
+import static com.github.ribesg.javachat.common.Constants.*;
+import com.github.ribesg.javachat.common.requests.*;
 
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
-import java.net.Socket;
 import java.util.Scanner;
 
-import com.github.ribesg.javachat.common.requests.PingRequest;
 
 /**
  * @author Ribesg
@@ -20,7 +16,7 @@ import com.github.ribesg.javachat.common.requests.PingRequest;
 public class MainClient {
 
 	private Client client;
-
+	private long sessionId;
 	/**
 	 * @param args
 	 *            Not used for now
@@ -36,12 +32,13 @@ public class MainClient {
 		while (!input.equalsIgnoreCase("exit")) {
 			input = scan.nextLine();
 			try {
-				client.send(new PingRequest(input));
+				client.send(new PingRequest(sessionId));
 			} catch (Exception e) {
 				e.printStackTrace();
 				System.exit(42);
 			}
 		}
+		scan.close();
 	}
 
 }

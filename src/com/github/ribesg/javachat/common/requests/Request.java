@@ -10,7 +10,7 @@ package com.github.ribesg.javachat.common.requests;
 public interface Request {
 
 	public enum ReqType {
-		CONNECT, DISCONNECT, HISTORY, MESSAGE, PING, PRIVATE,
+		CONNECT, DISCONNECT, HISTORY, SEND, PING, DELIVERED, VIEWED
 	}
 
 	@Override

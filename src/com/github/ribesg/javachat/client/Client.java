@@ -17,6 +17,7 @@ public class Client {
 		serverAddress = address;
 		serverPort = port;
 	}
+	
 
 	public void send(Request req) throws Exception {
 		clientSocket = new Socket(serverAddress, serverPort);

@@ -3,21 +3,22 @@
  */
 package com.github.ribesg.javachat.common.requests;
 
-import static com.github.ribesg.javachat.common.Constants.SEPARATOR;
+import static com.github.ribesg.javachat.common.Constants.*;
 
 /**
  * @author ribesg
  * 
  */
 public abstract class AbstractRequest implements Request {
-	protected String userName;
+	
 	protected ReqType reqType;
-	protected String[] content;
+	protected long sessionId;
+	protected String[] parameters;
 
-	public AbstractRequest(String name, ReqType type) {
-		userName = name;
+	public AbstractRequest(ReqType type, long sessId) {
 		reqType = type;
-		content = new String[]{};
+		sessionId = sessId;
+		parameters = new String[]{};
 	}
 
 	@Override
@@ -25,8 +26,8 @@ public abstract class AbstractRequest implements Request {
 		StringBuilder s = new StringBuilder();
 		s.append(reqType);
 		s.append(SEPARATOR);
-		s.append(userName);
-		for (String arg : content) {
+		s.append(sessionId);
+		for (String arg : parameters) {
 			s.append(SEPARATOR);
 			s.append(arg);
 		}

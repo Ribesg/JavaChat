@@ -8,21 +8,20 @@ import com.github.ribesg.javachat.common.requests.Request;
 
 public class Client {
 
-	private String serverAddress;
-	private int serverPort;
+    private final String serverAddress;
+    private final int    serverPort;
 
-	private Socket clientSocket;
+    private Socket       clientSocket;
 
-	public Client(String address, int port) {
-		serverAddress = address;
-		serverPort = port;
-	}
-	
+    public Client(final String address, final int port) {
+        serverAddress = address;
+        serverPort = port;
+    }
 
-	public void send(Request req) throws Exception {
-		clientSocket = new Socket(serverAddress, serverPort);
-		try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()))) {
-			writer.write(req.toString());
-		}
-	}
+    public void send(final Request req) throws Exception {
+        clientSocket = new Socket(serverAddress, serverPort);
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()))) {
+            writer.write(req.toString());
+        }
+    }
 }

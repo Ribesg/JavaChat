@@ -5,40 +5,40 @@ package com.github.ribesg.javachat.common;
 
 /**
  * @author Tom
- *
+ * 
  */
 public class Message {
-	private String content;
-	private long time;
-	private long id;
-	
-	public Message(String message, long messageTime, long messageID){
-		content = message;
-		time = messageTime;
-		id = messageID;
-	}
+    private String content;
+    private long   time;
+    private long   id;
 
-	public String getContent() {
-		return content;
-	}
+    public Message(final String message, final long messageTime, final long messageID) {
+        content = message;
+        time = messageTime;
+        id = messageID;
+    }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+    public String getContent() {
+        return content;
+    }
 
-	public long getTime() {
-		return time;
-	}
+    public void setContent(final String content) {
+        this.content = content;
+    }
 
-	public void setTime(long time) {
-		this.time = time;
-	}
+    public long getTime() {
+        return time;
+    }
 
-	public long getId() {
-		return id;
-	}
+    public void setTime(final long time) {
+        this.time = time;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public long getId() {
+        return id;
+    }
+
+    public void setId(final long id) {
+        this.id = id;
+    }
 }

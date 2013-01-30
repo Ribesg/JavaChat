@@ -9,10 +9,10 @@ package com.github.ribesg.javachat.common.requests;
  */
 public interface Request {
 
-	public enum ReqType {
-		CONNECT, DISCONNECT, SEND, DELIVER, PING, DELIVERED, VIEWED
-	}
+    public enum ReqType {
+        CONNECT, DISCONNECT, SEND, DELIVER, PING, DELIVERED, VIEWED
+    }
 
-	@Override
-	public String toString();
+    @Override
+    public String toString();
 }

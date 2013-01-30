@@ -9,8 +9,8 @@ package com.github.ribesg.javachat.common.requests;
  */
 public class PingRequest extends AbstractRequest {
 
-	public PingRequest(long sessId, long sequenceNumber) {
-		super(ReqType.PING, sessId, sequenceNumber);
-	}
+    public PingRequest(final long sessId, final long sequenceNumber) {
+        super(ReqType.PING, sessId, sequenceNumber);
+    }
 
 }

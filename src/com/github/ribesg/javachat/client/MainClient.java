@@ -33,7 +33,7 @@ public class MainClient {
 		while (!input.equalsIgnoreCase("exit")) {
 			input = scan.nextLine();
 			try {
-				client.send(new PingRequest(sessionId, seqNumber));
+				client.sendMessage(input, System.currentTimeMillis());
 			} catch (Exception e) {
 				e.printStackTrace();
 				System.exit(42);

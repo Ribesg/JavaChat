@@ -10,7 +10,7 @@ package com.github.ribesg.javachat.common.responses;
 public class DeliverResponse extends AbstractResponse {
 
 	public DeliverResponse(long sessId, RespStatus state, long messId, long sequenceNumber) {
-		super(RespType.DELIVER, sessId, state, sequenceNumber);
+		super(RespType.DELIVER, sessId, sequenceNumber, state);
 		parameters[0] = String.valueOf(messId);
 	}
 

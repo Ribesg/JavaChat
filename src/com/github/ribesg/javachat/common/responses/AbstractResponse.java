@@ -16,12 +16,12 @@ public abstract class AbstractResponse implements Response {
 	protected long seqNumber;
 	protected String[] parameters;
 
-	public AbstractResponse(RespType type, long sessId, RespStatus state, long sequenceNumber) {
+	public AbstractResponse(RespType type, long sessId, long sequenceNumber, RespStatus state) {
 		respType = type;
 		sessionId = sessId;
-		status = state;
 		seqNumber = sequenceNumber;
-		parameters = new String[]{};
+		status = state;
+		parameters = null;
 	}
 
 	@Override

@@ -9,8 +9,8 @@ package com.github.ribesg.javachat.common.responses;
  */
 public class DisconnectResponse extends AbstractResponse {
 
-	public DisconnectResponse(long sessId, RespStatus state, long sequenceNumber) {
-		super(RespType.DISCONNECT, sessId, state, sequenceNumber);
+	public DisconnectResponse(long sessId, long sequenceNumber, RespStatus state) {
+		super(RespType.DISCONNECT, sessId, sequenceNumber, state);
 	}
 
 }

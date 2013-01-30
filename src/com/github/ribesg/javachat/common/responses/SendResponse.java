@@ -9,8 +9,9 @@ package com.github.ribesg.javachat.common.responses;
  */
 public class SendResponse extends AbstractResponse {
 
-	public SendResponse(long sessId, RespStatus state, long messId, long sequenceNumber) {
-		super(RespType.SEND, sessId, state, sequenceNumber);
+	public SendResponse(long sessId, long sequenceNumber, RespStatus state, long messId) {
+		super(RespType.SEND, sessId, sequenceNumber, state);
+		parameters = new String[1];
 		parameters[0] = String.valueOf(messId);
 	}
 

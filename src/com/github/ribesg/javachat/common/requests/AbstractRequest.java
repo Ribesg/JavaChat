@@ -20,7 +20,7 @@ public abstract class AbstractRequest implements Request {
 		reqType = type;
 		sessionId = sessId;
 		seqNumber = sequenceNumber;
-		parameters = new String[]{};
+		parameters = null;
 	}
 
 	@Override

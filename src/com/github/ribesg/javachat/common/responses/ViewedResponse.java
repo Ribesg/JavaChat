@@ -9,8 +9,8 @@ package com.github.ribesg.javachat.common.responses;
  */
 public class ViewedResponse extends AbstractResponse {
 
-	public ViewedResponse(long sessId, RespStatus state, long sequenceNumber) {
-		super(RespType.VIEWED, sessId, state, sequenceNumber);
+	public ViewedResponse(long sessId, long sequenceNumber, RespStatus state) {
+		super(RespType.VIEWED, sessId, sequenceNumber, state);
 		
 	}
 

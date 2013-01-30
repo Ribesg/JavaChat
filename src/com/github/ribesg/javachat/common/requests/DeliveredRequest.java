@@ -9,8 +9,9 @@ package com.github.ribesg.javachat.common.requests;
  */
 public class DeliveredRequest extends AbstractRequest {
 
-	public DeliveredRequest(long sessId, long messId, long sequenceNumber) {
+	public DeliveredRequest(long sessId, long sequenceNumber, long messId) {
 		super(ReqType.DELIVERED, sessId, sequenceNumber);
+		parameters = new String[1];
 		parameters[0] = String.valueOf(messId);
 	}
 

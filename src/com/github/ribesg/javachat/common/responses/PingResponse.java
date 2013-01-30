@@ -9,8 +9,8 @@ package com.github.ribesg.javachat.common.responses;
  */
 public class PingResponse extends AbstractResponse {
 
-	public PingResponse(long sessId, RespStatus status, long sequenceNumber) {
-		super(RespType.PONG, sessId, status, sequenceNumber);
+	public PingResponse(long sessId, long sequenceNumber, RespStatus status) {
+		super(RespType.PONG, sessId, sequenceNumber, status);
 	}
 
 }

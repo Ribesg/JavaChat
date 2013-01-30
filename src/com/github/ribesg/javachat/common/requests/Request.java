@@ -4,13 +4,13 @@
 package com.github.ribesg.javachat.common.requests;
 
 /**
- * @author ribesg
+ * @author ribesg, Tom
  * 
  */
 public interface Request {
 
 	public enum ReqType {
-		CONNECT, DISCONNECT, HISTORY, SEND, PING, DELIVERED, VIEWED
+		CONNECT, DISCONNECT, SEND, DELIVER, PING, DELIVERED, VIEWED
 	}
 
 	@Override

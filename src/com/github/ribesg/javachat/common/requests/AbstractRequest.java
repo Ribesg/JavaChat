@@ -13,11 +13,13 @@ public abstract class AbstractRequest implements Request {
 	
 	protected ReqType reqType;
 	protected long sessionId;
+	protected long seqNumber;
 	protected String[] parameters;
 
-	public AbstractRequest(ReqType type, long sessId) {
+	public AbstractRequest(ReqType type, long sessId, long sequenceNumber) {
 		reqType = type;
 		sessionId = sessId;
+		seqNumber = sequenceNumber;
 		parameters = new String[]{};
 	}
 

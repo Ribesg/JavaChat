@@ -4,7 +4,6 @@
 package com.github.ribesg.javachat.client;
 
 import static com.github.ribesg.javachat.common.Constants.*;
-import com.github.ribesg.javachat.common.requests.*;
 
 import java.util.Scanner;
 
@@ -16,8 +15,6 @@ import java.util.Scanner;
 public class MainClient {
 
 	private Client client;
-	private long sessionId;
-	private long seqNumber;
 	/**
 	 * @param args
 	 *            Not used for now

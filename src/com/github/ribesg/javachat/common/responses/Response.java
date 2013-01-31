@@ -3,11 +3,13 @@
  */
 package com.github.ribesg.javachat.common.responses;
 
+import com.github.ribesg.javachat.common.TcpPacket;
+
 /**
  * @author ribesg
  * 
  */
-public interface Response {
+public interface Response extends TcpPacket{
 
 	public enum RespType {
 		CONNECT, DISCONNECT, SEND, DELIVER, DELIVERED, PONG, VIEWED
@@ -24,6 +26,4 @@ public interface Response {
 		ALREADY_CO,		// already connected		
 	}
 
-	@Override
-	public String toString();
 }

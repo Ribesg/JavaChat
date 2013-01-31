@@ -14,14 +14,12 @@ public abstract class AbstractResponse implements Response {
 	protected long sessionId;
 	protected RespStatus status;
 	protected long seqNumber;
-	protected String[] parameters;
 
 	public AbstractResponse(RespType type, long sessId, long sequenceNumber, RespStatus state) {
 		respType = type;
 		sessionId = sessId;
 		seqNumber = sequenceNumber;
 		status = state;
-		parameters = null;
 	}
 
 	@Override
@@ -34,10 +32,6 @@ public abstract class AbstractResponse implements Response {
 		s.append(seqNumber);
 		s.append(SEPARATOR);
 		s.append(status);
-		for (String arg : parameters) {
-			s.append(SEPARATOR);
-			s.append(arg);
-		}
 		return s.toString();
 	}
 }

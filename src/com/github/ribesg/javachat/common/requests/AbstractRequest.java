@@ -29,6 +29,8 @@ public abstract class AbstractRequest implements Request {
 		s.append(reqType);
 		s.append(SEPARATOR);
 		s.append(sessionId);
+		s.append(SEPARATOR);
+		s.append(seqNumber);
 		for (String arg : parameters) {
 			s.append(SEPARATOR);
 			s.append(arg);

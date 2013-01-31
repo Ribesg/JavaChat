@@ -3,6 +3,7 @@
  */
 package com.github.ribesg.javachat.common;
 
+
 /**
  * @author Ribesg
  * 

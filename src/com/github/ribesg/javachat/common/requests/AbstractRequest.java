@@ -10,7 +10,7 @@ import static com.github.ribesg.javachat.common.Constants.*;
  * 
  */
 public abstract class AbstractRequest implements Request {
-	
+
 	protected ReqType reqType;
 	protected long sessionId;
 	protected long seqNumber;
@@ -31,9 +31,11 @@ public abstract class AbstractRequest implements Request {
 		s.append(sessionId);
 		s.append(SEPARATOR);
 		s.append(seqNumber);
-		for (String arg : parameters) {
-			s.append(SEPARATOR);
-			s.append(arg);
+		if (parameters != null) {
+			for (String arg : parameters) {
+				s.append(SEPARATOR);
+				s.append(arg);
+			}
 		}
 		return s.toString();
 	}

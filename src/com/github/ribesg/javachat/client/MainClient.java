@@ -31,7 +31,8 @@ public class MainClient {
 			String input = "";
 			while (!input.equalsIgnoreCase("exit")) {
 				input = scan.nextLine();
-				client.sendMessage(input, System.currentTimeMillis());
+				//client.sendMessage(input, System.currentTimeMillis());
+				client.sendPing();
 
 			}
 			scan.close();

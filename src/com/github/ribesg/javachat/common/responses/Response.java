@@ -24,6 +24,7 @@ public interface Response extends TcpPacket{
 		INVALID_PASS,	// invalid password
 		INVALID_ARGS,	// invalid arguments for given cmd
 		ALREADY_CO,		// already connected		
+		TOO_MANY_USERS,	// too many users on the server
 	}
 
 }

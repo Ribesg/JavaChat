@@ -25,6 +25,7 @@ public abstract class AbstractResponse implements Response {
 	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();
+		s.append("R");
 		s.append(respType);
 		s.append(SEPARATOR);
 		s.append(sessionId);

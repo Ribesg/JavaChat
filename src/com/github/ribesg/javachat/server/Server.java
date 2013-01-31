@@ -1,10 +1,21 @@
 package com.github.ribesg.javachat.server;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Map;
+
+import com.github.ribesg.javachat.common.TcpPacket;
+import com.github.ribesg.javachat.common.requests.*;
+import com.github.ribesg.javachat.common.requests.Request.ReqType;
+import com.github.ribesg.javachat.common.responses.*;
+import com.github.ribesg.javachat.common.responses.Response.RespStatus;
+
+import static com.github.ribesg.javachat.common.Constants.*;
 
 public class Server extends Thread {
 
@@ -15,8 +26,10 @@ public class Server extends Thread {
 	private ServerSocket serverSocket;
 	private Socket clientSocket;
 
+	private Map<Long, ConnectedClient> clients;
+
 	public Server(final int port) {
-		serverPort = port;
+		serverPort = port;;
 	}
 
 	@Override
@@ -35,8 +48,35 @@ public class Server extends Thread {
 		try {
 			while (!terminated) {
 				clientSocket = serverSocket.accept();
-				try (BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))) {
+				try (BufferedReader reader = new BufferedReader(
+						new InputStreamReader(clientSocket.getInputStream()))) {
 					final String red = reader.readLine();
+					String[] parts = red.split(SEPARATOR_STRING);
+
+					if ('R' == red.charAt(0)) {// response
+
+					} else { // request
+						ReqType type = ReqType.valueOf(parts[0]);
+						long sessionId = Long.valueOf(parts[1]);
+						long sequenceNumber = Long.valueOf(parts[2]);
+
+						switch (type) {
+						case CONNECT:
+							if(clients.containsKey(sessionId))
+							{
+								// send connect resp with status already co
+							} else {
+								// compare password/user with that in file, register in clients map
+							}
+						case PING:
+							sendPingResp(clientSocket, sessionId, sequenceNumber++);
+							System.out.println("PING RECU");
+							break;
+						default:
+						}
+
+					}
+
 					terminated = red.equalsIgnoreCase("stop");
 					System.out.println(red);
 				}
@@ -47,6 +87,19 @@ public class Server extends Thread {
 			e.printStackTrace();
 			exit();
 		}
+	}
+
+	
+	
+	private void send(Socket client, TcpPacket packet) throws Exception {
+		try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
+				client.getOutputStream()))) {
+			writer.write(packet.toString());
+		}
+	}
+	
+	private void sendPingResp(Socket clientSocket, final long sessionId, final long sequenceNumber) throws Exception {
+		send(clientSocket, new PingResponse(sessionId, sequenceNumber, RespStatus.OK));		
 	}
 
 	public void exit() {

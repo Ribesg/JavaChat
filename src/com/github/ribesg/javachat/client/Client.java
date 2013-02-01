@@ -71,8 +71,6 @@ public class Client {
 		default:
 			throw new Exception("Client not supposed to send such type of response : " + type.toString());
 		}
-			
-		send(new DeliverResponse(sessId, seqNumber, state));
 	}
 
 }

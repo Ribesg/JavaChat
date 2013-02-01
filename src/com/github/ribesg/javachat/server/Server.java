@@ -14,6 +14,7 @@ import com.github.ribesg.javachat.common.requests.*;
 import com.github.ribesg.javachat.common.requests.Request.ReqType;
 import com.github.ribesg.javachat.common.responses.*;
 import com.github.ribesg.javachat.common.responses.Response.RespStatus;
+import com.github.ribesg.javachat.common.responses.Response.RespType;
 
 import static com.github.ribesg.javachat.common.Constants.*;
 
@@ -69,7 +70,7 @@ public class Server extends Thread {
 								// compare password/user with that in file, register in clients map
 							}
 						case PING:
-							sendPingResp(clientSocket, sessionId, sequenceNumber++);
+							sendResponse(clientSocket, RespType.PONG, RespStatus.OK, sessionId, sequenceNumber++);
 							System.out.println("PING RECU");
 							break;
 						default:
@@ -98,8 +99,26 @@ public class Server extends Thread {
 		}
 	}
 	
-	private void sendPingResp(Socket clientSocket, final long sessionId, final long sequenceNumber) throws Exception {
-		send(clientSocket, new PingResponse(sessionId, sequenceNumber, RespStatus.OK));		
+	public void sendResponse(Socket client,RespType type, RespStatus state,  final long sessionId, final long sequenceNumber) throws Exception {
+		switch (type) {
+		case CONNECT:
+			send(client, new ConnectResponse(sessionId, sequenceNumber,state));
+			break;
+		case DISCONNECT:
+			send(client, new DisconnectResponse(sessionId,sequenceNumber, state));
+			break;
+		case PONG:
+			send(client, new PingResponse(sessionId, sequenceNumber, state));
+			break;
+		case SEND:
+			send(client, new SendResponse(sessionId, sequenceNumber, state));
+			break;
+		case VIEWED:
+			send(client, new ViewedResponse(sessionId, sequenceNumber, state));
+			break;
+		default:
+			throw new Exception("Server not supposed to send such type of response : " + type.toString());
+		}
 	}
 
 	public void exit() {

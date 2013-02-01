@@ -9,6 +9,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Map;
 
+import com.github.ribesg.javachat.common.Message;
 import com.github.ribesg.javachat.common.TcpPacket;
 import com.github.ribesg.javachat.common.requests.*;
 import com.github.ribesg.javachat.common.requests.Request.ReqType;
@@ -97,6 +98,10 @@ public class Server extends Thread {
 				client.getOutputStream()))) {
 			writer.write(packet.toString());
 		}
+	}
+	
+	public void sendDeliver(Socket client, final long sessionId, final long sequenceNumber, final Message message) throws Exception{
+		send(client, new DeliverRequest(sessionId, sequenceNumber, message.getContent(), message.getTime(), message.getId()));
 	}
 	
 	public void sendResponse(Socket client,RespType type, RespStatus state,  final long sessionId, final long sequenceNumber) throws Exception {

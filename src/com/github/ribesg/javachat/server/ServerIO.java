@@ -1,5 +1,7 @@
 package com.github.ribesg.javachat.server;
 
+import static com.github.ribesg.javachat.common.Constants.SEPARATOR_STRING;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -7,18 +9,18 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Map;
 
 import com.github.ribesg.javachat.common.Message;
 import com.github.ribesg.javachat.common.TcpPacket;
-import com.github.ribesg.javachat.common.requests.*;
+import com.github.ribesg.javachat.common.requests.DeliverRequest;
 import com.github.ribesg.javachat.common.requests.Request.ReqType;
-import com.github.ribesg.javachat.common.responses.*;
+import com.github.ribesg.javachat.common.responses.ConnectResponse;
+import com.github.ribesg.javachat.common.responses.DisconnectResponse;
+import com.github.ribesg.javachat.common.responses.PingResponse;
 import com.github.ribesg.javachat.common.responses.Response.RespStatus;
 import com.github.ribesg.javachat.common.responses.Response.RespType;
-import com.github.ribesg.javachat.server.Server.AddResult;
-
-import static com.github.ribesg.javachat.common.Constants.*;
+import com.github.ribesg.javachat.common.responses.SendResponse;
+import com.github.ribesg.javachat.common.responses.ViewedResponse;
 
 public class ServerIO extends Thread {
 
@@ -90,6 +92,11 @@ public class ServerIO extends Thread {
 								sendResponse(clientSocket, RespType.PONG, RespStatus.INVALID_SESS, sessionId, sequenceNumber++);
 							}
 							break;
+						case SEND:
+							String message = parts[3];
+							long time = Long.valueOf(parts[4]);
+							Message mess = new Message(message, time, time);
+							sendResponse(clientSocket, RespType.SEND, RespStatus.OK, sessionId, sequenceNumber++);
 						default:
 						}
 

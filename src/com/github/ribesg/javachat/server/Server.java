@@ -33,8 +33,7 @@ public class Server extends Thread {
 
 	public AddResult addClient(String username, String password, long sessionId) throws Exception {
 		AddResult result;
-		ConnectedClient client;
-		if ((client = findClient(sessionId)) == null) {
+		if (findClient(sessionId) == null) {
 			if (match(username, password)) {
 				if (clients[0] == null) {
 					clients[0] = new ConnectedClient(username, sessionId);
@@ -91,7 +90,8 @@ public class Server extends Thread {
 	public boolean ping(long sessionId) {
 		boolean res = false;
 		ConnectedClient client;
-		if((client = findClient(sessionId)) != null) {
+		client = findClient(sessionId);
+		if(client  != null) {
 			client.resetTimeout();
 			res = true;
 		}

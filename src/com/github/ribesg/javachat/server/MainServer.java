@@ -22,10 +22,7 @@ public class MainServer {
     public MainServer() {
     	final Server server = new Server();
     	server.start();
-    	server.run();
-    	System.out.println("Server.run passé");
         final ServerIO serverIO = new ServerIO(SERVER_PORT,server);
         serverIO.start();
-        serverIO.run();
     }
 }

@@ -42,6 +42,7 @@ public class ServerIO extends Thread {
 	public void start() {
 		try {
 			serverSocket = new ServerSocket(serverPort);
+			run();
 		} catch (final IOException e) {
 			System.out.println("Unable to start the server! Error follows:");
 			e.printStackTrace();

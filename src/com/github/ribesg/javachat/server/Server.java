@@ -58,9 +58,6 @@ public class Server extends Thread {
 		return true;
 	}
 
-	@Override
-	public void start() {
-	}
 
 	
 	

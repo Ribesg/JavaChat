@@ -33,7 +33,6 @@ public class MainClient {
 				input = scan.nextLine();
 				// client.sendMessage(input, System.currentTimeMillis());
 				client.sendPing();
-
 			}
 			scan.close();
 		} catch (Exception e) {

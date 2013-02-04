@@ -4,7 +4,7 @@ import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-import com.github.ribesg.javachat.common.TcpPacket;
+import com.github.ribesg.javachat.common.Message;
 import com.github.ribesg.javachat.common.requests.*;
 import com.github.ribesg.javachat.common.responses.*;
 import com.github.ribesg.javachat.common.responses.Response.*;
@@ -29,7 +29,7 @@ public class Client {
 		seqNumber = 0;
 	}
 
-	private void send(TcpPacket packet) throws Exception {
+	private void send(Message packet) throws Exception {
 		clientSocket = new Socket(serverAddress, serverPort);
 		try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
 				clientSocket.getOutputStream()))) {

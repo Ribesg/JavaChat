@@ -10,8 +10,8 @@ import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import com.github.ribesg.javachat.common.ChatMessage;
 import com.github.ribesg.javachat.common.Message;
-import com.github.ribesg.javachat.common.TcpPacket;
 import com.github.ribesg.javachat.common.requests.DeliverRequest;
 import com.github.ribesg.javachat.common.requests.Request.ReqType;
 import com.github.ribesg.javachat.common.responses.ConnectResponse;
@@ -96,7 +96,8 @@ public class ServerIO extends Thread {
 						case SEND:
 							String message = parts[3];
 							long time = Long.valueOf(parts[4]);
-							Message mess = new Message(message, time, time);
+							@SuppressWarnings("unused")
+							ChatMessage mess = new ChatMessage(message, time, time);
 							sendResponse(clientSocket, RespType.SEND, RespStatus.OK, sessionId, sequenceNumber++);
 						default:
 						}
@@ -117,14 +118,14 @@ public class ServerIO extends Thread {
 
 	
 	
-	private void send(Socket client, TcpPacket packet) throws Exception {
+	private void send(Socket client, Message packet) throws Exception {
 		try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
 				client.getOutputStream()))) {
 			writer.write(packet.toString());
 		}
 	}
 	
-	public void sendDeliver(Socket client, final long sessionId, final long sequenceNumber, final Message message) throws Exception{
+	public void sendDeliver(Socket client, final long sessionId, final long sequenceNumber, final ChatMessage message) throws Exception{
 		send(client, new DeliverRequest(sessionId, sequenceNumber, message.getContent(), message.getTime(), message.getId()));
 	}
 	

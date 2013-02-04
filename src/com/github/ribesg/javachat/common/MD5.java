@@ -13,7 +13,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class MD5 {
 
-	public static String md5(String input) {
+	public static String hash(String input) {
 
 		String md5 = null;
 

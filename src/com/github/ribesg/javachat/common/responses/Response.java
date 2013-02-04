@@ -3,13 +3,13 @@
  */
 package com.github.ribesg.javachat.common.responses;
 
-import com.github.ribesg.javachat.common.TcpPacket;
+import com.github.ribesg.javachat.common.Message;
 
 /**
  * @author ribesg
  * 
  */
-public interface Response extends TcpPacket{
+public interface Response extends Message{
 
 	public enum RespType {
 		CONNECT, DISCONNECT, SEND, DELIVER, DELIVERED, PONG, VIEWED

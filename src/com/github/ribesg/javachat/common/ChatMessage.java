@@ -9,13 +9,13 @@ package com.github.ribesg.javachat.common;
  */
 public class ChatMessage {
 	private String content;
+	private String writer;
 	private long time;
-	private long id;
 	
-	public ChatMessage(String message, long messageTime, long messageID){
+	public ChatMessage(String message, String writerName, long messageTime){
 		content = message;
+		writer = writerName;
 		time = messageTime;
-		id = messageID;
 	}
 
 	public String getContent() {
@@ -34,11 +34,11 @@ public class ChatMessage {
 		this.time = time;
 	}
 
-	public long getId() {
-		return id;
+	public String getWriter() {
+		return writer;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setWriter(String writer) {
+		this.writer = writer;
 	}
 }

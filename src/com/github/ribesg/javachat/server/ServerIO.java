@@ -36,6 +36,7 @@ public class ServerIO extends Thread {
 	public ServerIO(final int port, Server serv) {
 		serverPort = port;
 		server = serv;
+		server.register(this);
 	}
 
 	@Override
@@ -60,45 +61,59 @@ public class ServerIO extends Thread {
 					final String red = reader.readLine();
 					String[] parts = red.split(SEPARATOR_STRING);
 
-					if ('R' == red.charAt(0)) {// response
+					if (parts[0].equals("R")) {// response
+						RespType type = RespType.valueOf(parts[1]);
+						long sessionId = Long.valueOf(parts[2]);
+						long sequenceNumber = Long.valueOf(parts[3]);
+						
+						switch(type) {
+						case DELIVER:
+							//TODO : link message and sequencenumber
+							ChatMessage mes = new ChatMessage("lol","lol", 0);
+							server.removeFromSentList(mes);
+							break;
+						default:
+							break;
+						}
 
 					} else { // request
 						ReqType type = ReqType.valueOf(parts[0]);
 						long sessionId = Long.valueOf(parts[1]);
 						long sequenceNumber = Long.valueOf(parts[2]);
+						server.setSequenceNumber(sessionId, sequenceNumber + 1);
 
 						switch (type) {
 						case CONNECT:
 							String username = parts[3];
 							String password = parts[4];
-							switch (server.addClient(username, password, sessionId)) {
+							switch (server.addClient(clientSocket, username, password, sessionId)) {
 								case ALREADY_CO:
-									sendResponse(clientSocket, RespType.CONNECT, RespStatus.ALREADY_CO, sessionId, sequenceNumber++);
+									sendResponse(clientSocket, RespType.CONNECT, RespStatus.ALREADY_CO, sessionId, sequenceNumber);
 									break;
 								case BAD_PASSWORD:
-									sendResponse(clientSocket, RespType.CONNECT, RespStatus.INVALID_PASS, sessionId, sequenceNumber++);
+									sendResponse(clientSocket, RespType.CONNECT, RespStatus.INVALID_PASS, sessionId, sequenceNumber);
 									break;
 								case FULL:
-									sendResponse(clientSocket, RespType.CONNECT, RespStatus.TOO_MANY_USERS, sessionId, sequenceNumber++);
+									sendResponse(clientSocket, RespType.CONNECT, RespStatus.TOO_MANY_USERS, sessionId, sequenceNumber);
 									break;
 								case OK:
-									sendResponse(clientSocket, RespType.CONNECT, RespStatus.OK, sessionId, sequenceNumber++);
+									sendResponse(clientSocket, RespType.CONNECT, RespStatus.OK, sessionId, sequenceNumber);
 									break;
 							}
 						case PING:
 							if(server.ping(sessionId))
 							{
-								sendResponse(clientSocket, RespType.PONG, RespStatus.OK, sessionId, sequenceNumber++);
+								sendResponse(clientSocket, RespType.PONG, RespStatus.OK, sessionId, sequenceNumber);
 							} else {
-								sendResponse(clientSocket, RespType.PONG, RespStatus.INVALID_SESS, sessionId, sequenceNumber++);
+								sendResponse(clientSocket, RespType.PONG, RespStatus.INVALID_SESS, sessionId, sequenceNumber);
 							}
 							break;
 						case SEND:
 							String message = parts[3];
 							long time = Long.valueOf(parts[4]);
-							@SuppressWarnings("unused")
-							ChatMessage mess = new ChatMessage(message, time, time);
-							sendResponse(clientSocket, RespType.SEND, RespStatus.OK, sessionId, sequenceNumber++);
+							ChatMessage mess = new ChatMessage(message,server.getUsername(sessionId), time);
+							server.addToMessageList(mess);
+							sendResponse(clientSocket, RespType.SEND, RespStatus.OK, sessionId, sequenceNumber);
 						default:
 						}
 
@@ -126,7 +141,7 @@ public class ServerIO extends Thread {
 	}
 	
 	public void sendDeliver(Socket client, final long sessionId, final long sequenceNumber, final ChatMessage message) throws Exception{
-		send(client, new DeliverRequest(sessionId, sequenceNumber, message.getContent(), message.getTime(), message.getId()));
+		send(client, new DeliverRequest(sessionId, sequenceNumber, message.getContent(), message.getTime()));
 	}
 	
 	public void sendResponse(Socket client,RespType type, RespStatus state,  final long sessionId, final long sequenceNumber) throws Exception {

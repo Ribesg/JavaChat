@@ -3,6 +3,8 @@
  */
 package com.github.ribesg.javachat.server;
 
+import java.net.Socket;
+
 
 
 /**
@@ -12,13 +14,15 @@ package com.github.ribesg.javachat.server;
 public class ConnectedClient {
 	
 	private String userName;
+	private Socket clientSocket;
 	private long sessionID;
 	private long sequenceNumber;
 	private long timeout;
 	
 	private static final long TIMEOUT = 120;
 	
-	ConnectedClient(String username, long sessionId){
+	ConnectedClient(Socket socket, String username, long sessionId){
+		clientSocket = socket;
 		userName = username;
 		sessionID = sessionId;
 		sequenceNumber = 0;
@@ -37,6 +41,10 @@ public class ConnectedClient {
 		return sequenceNumber;
 	}
 	
+	public void setSequenceNumber(long seqNumber) {
+		sequenceNumber = seqNumber;
+	}
+	
 	public void resetTimeout() {
 		timeout = TIMEOUT;
 	}
@@ -51,6 +59,14 @@ public class ConnectedClient {
 	
 	public boolean isTimedOut(){
 		return (timeout==0);
+	}
+
+	public Socket getSocket() {
+		return clientSocket;
+	}
+
+	public void setSocket(Socket socket) {
+		clientSocket = socket;
 	}
 	
 }

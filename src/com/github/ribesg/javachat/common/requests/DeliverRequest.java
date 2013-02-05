@@ -11,12 +11,11 @@ package com.github.ribesg.javachat.common.requests;
 
 public class DeliverRequest extends AbstractRequest {
 
-	public DeliverRequest( long sessId, long sequenceNumber, String message, long currentTime, long messId) {
+	public DeliverRequest( long sessId, long sequenceNumber, String message, long currentTime) {
 		super(ReqType.DELIVER, sessId, sequenceNumber);
-		parameters = new String[3];
+		parameters = new String[2];
 		parameters[0] = message;
 		parameters[1] = String.valueOf(currentTime);
-		parameters[2] = String.valueOf(messId);
 	}
 
 }

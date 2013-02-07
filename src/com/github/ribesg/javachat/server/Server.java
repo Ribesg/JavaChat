@@ -109,12 +109,16 @@ public class Server extends Thread {
 			if (clients[1] != null && clients[1].timeout())
 				clients[1] = null;
 
-			if (!messagesToSend.isEmpty()) {
+			if (!messagesToSend.isEmpty()) { //we send message if there are some to send
 				for (ChatMessage mes : messagesToSend) {
-					ConnectedClient client = findRecipient(mes.getWriter());
-					if(client != null) {
+					ConnectedClient recipient = findRecipient(mes.getWriter());
+					if(recipient != null) {
 						try {
-							serverIO.sendDeliver(client.getSocket(), client.getSessionID(), client.getSequenceNumber(), mes);
+							long sequenceNumber = recipient.getIncrSequenceNumber();
+							long sessionId = recipient.getSessionID();
+							serverIO.sendDeliver(recipient.getSocket(), sessionId, sequenceNumber, mes);
+							mes.setSessionId(sessionId);
+							mes.setSequenceNumber(sequenceNumber);
 							messagesSent.add(mes);
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
@@ -123,6 +127,13 @@ public class Server extends Thread {
 					}
 				}
 				messagesToSend.clear();
+			}
+			
+			if (!messagesSent.isEmpty()) { //if we have messages sent but did not receive response, place them in ToSend again
+				for (ChatMessage mes : messagesSent) {
+					messagesToSend.add(mes);
+					messagesSent.remove(mes);
+				}
 			}
 
 			try { // TODO : change this to schedule machintruc
@@ -150,6 +161,17 @@ public class Server extends Thread {
 
 	public void removeFromSentList(ChatMessage mes) {
 		messagesSent.remove(mes);
+	}
+	
+	public void removeFromSentList(long sequenceNumber, long sessionId) {
+		if(!messagesSent.isEmpty()) {
+			for(ChatMessage mes : messagesSent){
+				if(mes.getSequenceNumber() == sequenceNumber && mes.getSessionId() == sessionId) {
+					messagesSent.remove(mes);
+					break;
+				}
+			}
+		}
 	}
 
 }

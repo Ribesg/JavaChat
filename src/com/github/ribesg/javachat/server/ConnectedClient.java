@@ -68,5 +68,9 @@ public class ConnectedClient {
 	public void setSocket(Socket socket) {
 		clientSocket = socket;
 	}
+
+	public long getIncrSequenceNumber() {
+		return ++sequenceNumber;
+	}
 	
 }
